@@ -1,0 +1,52 @@
+
+
+Example SQL using free public database located https://www.sql-practice.com/. Limiations include this not being a live database, 
+would normally NOLOCK tables to prevent dirty reads. Theses querires were written from scratch in about 10 minutes just to show an example of my SQL. 
+
+
+
+Sample query of all patients with first name starting with B, ordered by newest patient to oldest. Rename column titles to be more readable. 
+
+SELECT 
+patient_id  as 'Patient ID'
+,first_name as 'First Name'
+,last_name  as 'Last Name'
+FROM patients
+where 1=1
+and first_name like 'B%'
+order by patient_id desc
+
+
+
+Sample query of Count of diagnosis by Doctor ordered by most instances of diagnosis. 
+
+
+SELECT 
+count(a.diagnosis) as 'Instance of Diagnosis'
+,diagnosis
+,d.doctor_id
+,d.last_name
+FROM admissions a 
+left join	doctors d on d.doctor_id = a.attending_doctor_id
+where 1=1
+group by  doctor_id
+order by count(a.diagnosis) desc
+
+
+Grabs all patients and the data from their most recent admission using and outer apply (query doesnt work in example website, outer applies are not functional there). 
+
+
+Select 
+p.patient_id
+,A.*
+from patients p
+OUTER APPLY 
+   ( 
+   SELECT TOP 1 * 
+   FROM admissions a
+   WHERE p.patients = a.patient_id
+     order by a.discharge_date desc
+   ) A 
+where 1=1
+
+
