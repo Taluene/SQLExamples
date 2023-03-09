@@ -33,7 +33,7 @@ group by  doctor_id
 order by count(a.diagnosis) desc
 
 
-Grabs all patients and the data from their most recent admission using and outer apply (query doesnt work in example website, outer applies are not functional there). 
+Grabs all patients and the data from their most recent admission using an outer apply (query doesnt work in example website, outer applies are not functional there). 
 
 
 Select 
